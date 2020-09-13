@@ -19,5 +19,9 @@ class MainActivity : AppCompatActivity() {
             .setOverlayBannerBackgroundColor("#ffffff")
             .build()
 
+        val cpxResearch = CPXResearch.init(this, cpxSettings)
+
+
+
     }
 }
