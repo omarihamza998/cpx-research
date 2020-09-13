@@ -1,6 +1,6 @@
 package com.cpx_research.models
 
-data class CPXSettings(
+class CPXSettings(
     val appId: String,
     val extUserId: String,
     var email: String?,
@@ -51,6 +51,35 @@ data class CPXSettings(
         builder.overlayBannerBackgroundColor,
         builder.overlayBannerTextColor
     )
+
+    fun convertToRequestParameters(): Map<String, String> {
+        val params = HashMap<String, String>()
+
+        params["app_id"] = appId
+        params["ext_user_id"] = extUserId
+        email?.let { params["email"] = it }
+        username?.let { params["username"] = it }
+        secureHash?.let { params["secure_hash"] = it }
+        subId1?.let { params["subid_1"] = it }
+        subId2?.let { params["subid_2"] = it }
+        extraInfo1?.let { params["extra_info_1"] = it }
+        extraInfo2?.let { params["extra_info_2"] = it }
+        extraInfo3?.let { params["extra_info_3"] = it }
+        extraInfo4?.let { params["extra_info_4"] = it }
+        extraInfo5?.let { params["extra_info_5"] = it }
+        extraInfo6?.let { params["extra_info_6"] = it }
+        extraInfo7?.let { params["extra_info_7"] = it }
+        extraInfo8?.let { params["extra_info_8"] = it }
+        extraInfo9?.let { params["extra_info_9"] = it }
+        extraInfo10?.let { params["extra_info_10"] = it }
+        webViewTextColor?.let { params["text_color"] = it }
+        webViewTopBarBackgroundColor?.let { params["topbar_background_color"] = it }
+        webViewBoxBackgroundColor?.let { params["box_background_color"] = it }
+        webViewStarsFilledColor?.let { params["stars_filled"] = it }
+        params["output_method"] = "jsscriptv1"
+
+        return params
+    }
 
 }
 

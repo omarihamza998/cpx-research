@@ -1,7 +1,7 @@
 package com.cpx_research.interfaces
 
-import android.content.Context
-import com.cpx_research.models.CPXSettings
+import com.cpx_research.models.CPXTextInformation
+import com.cpx_research.models.CPXSurvey
 import java.util.concurrent.TimeUnit
 
 interface ICPXResearch {
@@ -10,7 +10,7 @@ interface ICPXResearch {
 
     fun disableBanner()
 
-    fun fetchAvailableSurveys(onCPXResponseListener: OnCPXResponseListener)
+    fun fetchAvailableSurveys(onCPXResponseListener: OnCPXResponseListener<List<CPXSurvey>>)
 
     fun isBannerVisible(): Boolean
 
@@ -20,6 +20,6 @@ interface ICPXResearch {
 
     fun openSurvey(surveyId: String)
 
-    fun getCPXTextInformation(onCPXResponseListener: OnCPXResponseListener)
+    fun getCPXTextInformation(onCPXResponseListener: OnCPXResponseListener<CPXTextInformation>)
 
 }

@@ -1,17 +1,28 @@
 package com.cpx_research
 
 import android.content.Context
+import com.androidnetworking.AndroidNetworking
+import com.cpx_research.interfaces.CPXNetworking
 import com.cpx_research.interfaces.ICPXResearch
 import com.cpx_research.interfaces.OnCPXResponseListener
 import com.cpx_research.models.CPXSettings
+import com.cpx_research.models.CPXSurvey
+import com.cpx_research.models.CPXTextInformation
+import com.cpx_research.networking.CPXNetworkingImpl
+
 
 class CPXResearch private constructor(
     val context: Context,
-    val cpxSettings: CPXSettings
+    private val cpxSettings: CPXSettings
 ) : ICPXResearch {
 
+    var cpxNetworking: CPXNetworking = CPXNetworkingImpl(cpxSettings)
+
     companion object {
-        fun init(context: Context, cpxSettings: CPXSettings) = CPXResearch(context, cpxSettings)
+        fun init(context: Context, cpxSettings: CPXSettings): CPXResearch {
+            AndroidNetworking.initialize(context)
+            return CPXResearch(context, cpxSettings)
+        }
     }
 
 
@@ -21,10 +32,17 @@ class CPXResearch private constructor(
     override fun disableBanner() {
     }
 
-    override fun fetchAvailableSurveys(onCPXResponseListener: OnCPXResponseListener) {
+    override fun fetchAvailableSurveys(onCPXResponseListener: OnCPXResponseListener<List<CPXSurvey>>) {
+        cpxNetworking.fetchAllSurveys(onCPXResponseListener)
     }
 
+    override fun getCPXTextInformation(onCPXResponseListener: OnCPXResponseListener<CPXTextInformation>) {
+        cpxNetworking.getCPXTextInformation(onCPXResponseListener)
+    }
+
+
     override fun isBannerVisible(): Boolean {
+        return false;
     }
 
     override fun checkForNewSurveys() {
@@ -36,7 +54,5 @@ class CPXResearch private constructor(
     override fun openSurvey(surveyId: String) {
     }
 
-    override fun getCPXTextInformation(onCPXResponseListener: OnCPXResponseListener) {
-    }
 
 }
