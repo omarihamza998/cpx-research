@@ -1,5 +1,6 @@
 package com.cpx_research.interfaces
 
+import com.cpx_research.models.CPXResponse
 import com.cpx_research.models.CPXTextInformation
 import com.cpx_research.models.CPXSurvey
 import java.util.concurrent.TimeUnit
@@ -21,5 +22,7 @@ interface ICPXResearch {
     fun openSurvey(surveyId: String)
 
     fun getCPXTextInformation(onCPXResponseListener: OnCPXResponseListener<CPXTextInformation>)
+
+    fun getCPXResponse(onCPXResponseListener: OnCPXResponseListener<CPXResponse>)
 
 }

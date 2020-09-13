@@ -22,8 +22,8 @@ class CPXSettings(
     var webViewTopBarBackgroundColor: String?,
     var webViewBoxBackgroundColor: String?,
     var webViewStarsFilledColor: String?,
-    var overlayBannerBackgroundColor: String?,
-    var overlayBannerTextColor: String?
+    var overlayBannerBackgroundColor: String= "#1565c0",
+    var overlayBannerTextColor: String = "#ffffff"
 ) {
 
     constructor(builder: CPXSettingsBuilder) : this(
@@ -48,8 +48,8 @@ class CPXSettings(
         builder.webViewTopBarBackgroundColor,
         builder.webViewBoxBackgroundColor,
         builder.webViewStarsFilledColor,
-        builder.overlayBannerBackgroundColor,
-        builder.overlayBannerTextColor
+        builder.overlayBannerBackgroundColor ?: "#1565c0",
+        builder.overlayBannerTextColor ?: "#ffffff"
     )
 
     fun convertToRequestParameters(): Map<String, String> {

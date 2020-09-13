@@ -16,30 +16,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val cpxSettings = CPXSettingsBuilder("5878", "123")
-            .setEmail("123")
-            .setUsername("email")
-            .setExtraInfo1("123")
-            .setOverlayBannerTextColor("#00000")
-            .setOverlayBannerBackgroundColor("#ffffff")
+        val cpxSettings = CPXSettingsBuilder("1", "1587960")
             .build()
 
         val cpxResearch = CPXResearch.init(this, cpxSettings)
 
-        cpxResearch.getCPXTextInformation(object : OnCPXResponseListener<CPXTextInformation>{
-            override fun onSuccess(data: CPXTextInformation?) {
-                Toast.makeText(
-                    applicationContext,
-                    "Success",
-                    Toast.LENGTH_LONG
-                ).show()
-                Log.e("TEXT INFORMATION", data?.toString() ?: "ss")
-            }
-
-            override fun onError(message: String) {
-                Toast.makeText(applicationContext, message, Toast.LENGTH_LONG).show()
-            }
-
-        })
+        cpxResearch.enableBanner()
     }
 }

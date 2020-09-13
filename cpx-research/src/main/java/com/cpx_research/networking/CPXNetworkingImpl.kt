@@ -1,5 +1,6 @@
 package com.cpx_research.networking
 
+import android.util.Log
 import com.androidnetworking.AndroidNetworking
 import com.androidnetworking.error.ANError
 import com.androidnetworking.interfaces.ParsedRequestListener
@@ -16,6 +17,31 @@ class CPXNetworkingImpl(private val cpxSettings: CPXSettings) : CPXNetworking {
         private const val GET_SURVEYS_URL = "https://live-api.cpx-research.com/api/get-surveys.php"
     }
 
+    override fun getCPXResponse(onCPXResponseListener: OnCPXResponseListener<CPXResponse>) {
+        AndroidNetworking.get(GET_SURVEYS_URL)
+            .addQueryParameter(cpxSettings.convertToRequestParameters())
+            .build()
+            .getAsObject(CPXResponse::class.java, object : ParsedRequestListener<CPXResponse> {
+                override fun onResponse(response: CPXResponse?) {
+                    if (response != null) {
+                        if (response.errorMessage != null) {
+                            onCPXResponseListener.onError(response.errorMessage ?: "unknown error")
+                        } else {
+                            onCPXResponseListener.onSuccess(response)
+                        }
+                    } else {
+                        onCPXResponseListener.onSuccess(null)
+                    }
+                }
+
+                override fun onError(anError: ANError?) {
+                    onCPXResponseListener.onError(anError?.message ?: "unknown error")
+                }
+
+            })
+    }
+
+
     override fun fetchAllSurveys(
         onCPXResponseListener: OnCPXResponseListener<List<CPXSurvey>>
     ) {
@@ -25,6 +51,7 @@ class CPXNetworkingImpl(private val cpxSettings: CPXSettings) : CPXNetworking {
             .getAsObject(CPXResponse::class.java, object : ParsedRequestListener<CPXResponse> {
                 override fun onResponse(response: CPXResponse?) {
                     if (response != null) {
+                        Log.e("RESPONSE", response.toString())
                         if (response.errorMessage != null) {
                             onCPXResponseListener.onError(response.errorMessage ?: "unknown error")
                         } else {
