@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val cpxSettings = CPXSettingsBuilder("1", "1587960")
+        val cpxSettings = CPXSettingsBuilder("1", "15879600")
             .build()
 
         val cpxResearch = CPXResearch.init(this, cpxSettings)

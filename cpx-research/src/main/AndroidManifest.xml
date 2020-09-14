@@ -1,2 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.cpx_research" />
+    package="com.cpx_research">
+
+    <application>
+        <activity
+            android:name=".ui.webview.CPXWebViewActivity"
+            android:theme="@style/CPXWebViewStyle"/>
+    </application>
+
+</manifest>

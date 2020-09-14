@@ -1,5 +1,7 @@
 package com.cpx_research.models
 
+import java.io.Serializable
+
 class CPXSettings(
     val appId: String,
     val extUserId: String,
@@ -24,7 +26,7 @@ class CPXSettings(
     var webViewStarsFilledColor: String?,
     var overlayBannerBackgroundColor: String= "#1565c0",
     var overlayBannerTextColor: String = "#ffffff"
-) {
+) : Serializable {
 
     constructor(builder: CPXSettingsBuilder) : this(
         builder.appId,

@@ -1,6 +1,7 @@
-package com.cpx_research.banner
+package com.cpx_research.ui.banner
 
 import android.app.Activity
+import android.content.Intent
 import android.graphics.Color
 import android.view.Gravity
 import android.view.View
@@ -17,6 +18,7 @@ import com.cpx_research.interfaces.OnCPXResponseListener
 import com.cpx_research.models.CPXResponse
 import com.cpx_research.models.CPXSettings
 import com.cpx_research.models.CPXTextInformation
+import com.cpx_research.ui.webview.CPXWebViewActivity
 
 
 interface ISurveyOverlayBanner {
@@ -126,7 +128,9 @@ class SurveyOverlayBanner(
     }
 
     override fun onOpenWebViewClickListener() {
-        Toast.makeText(activity, "Open WebView", Toast.LENGTH_LONG).show()
+        val intent = Intent(activity, CPXWebViewActivity::class.java)
+        intent.putExtra("settings", cpxSettings)
+        activity.startActivity(intent)
     }
 
     override fun onCloseBannerClickListener(cpxTextInformation: CPXTextInformation) {

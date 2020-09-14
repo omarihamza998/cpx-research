@@ -3,7 +3,7 @@ package com.cpx_research
 import android.app.Activity
 import com.androidnetworking.AndroidNetworking
 import com.androidnetworking.interceptors.HttpLoggingInterceptor
-import com.cpx_research.banner.SurveyOverlayBanner
+import com.cpx_research.ui.banner.SurveyOverlayBanner
 import com.cpx_research.interfaces.CPXNetworking
 import com.cpx_research.interfaces.ICPXResearch
 import com.cpx_research.interfaces.OnCPXResponseListener
