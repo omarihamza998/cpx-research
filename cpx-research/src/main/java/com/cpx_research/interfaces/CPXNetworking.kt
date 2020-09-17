@@ -10,7 +10,10 @@ interface CPXNetworking {
 
     fun fetchAllSurveys(onCPXResponseListener: OnCPXResponseListener<List<CPXSurvey>>)
 
-    fun hideBannerRequest()
+    fun hideBannerRequest(
+        duration: Long,
+        onCPXResponseListener: OnCPXResponseListener<Any>
+    )
 
     fun getCPXTextInformation(onCPXResponseListener: OnCPXResponseListener<CPXTextInformation>)
 

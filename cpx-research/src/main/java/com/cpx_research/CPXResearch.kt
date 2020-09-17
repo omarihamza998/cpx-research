@@ -36,7 +36,7 @@ class CPXResearch private constructor(
     override fun enableBanner(surveysCheckInterval: Long) {
         if (surveyOverlayBanner == null) {
             surveyOverlayBanner =
-                SurveyOverlayBanner(activity, this, cpxSettings, surveysCheckInterval)
+                SurveyOverlayBanner(activity, cpxSettings, surveysCheckInterval)
         }
         surveyOverlayBanner?.enableBanner()
     }
@@ -55,6 +55,13 @@ class CPXResearch private constructor(
 
     override fun getCPXResponse(onCPXResponseListener: OnCPXResponseListener<CPXResponse>) {
         cpxNetworking.getCPXResponse(onCPXResponseListener)
+    }
+
+    override fun hideBannerForDuration(
+        duration: Long,
+        onCPXResponseListener: OnCPXResponseListener<Any>
+    ) {
+        cpxNetworking.hideBannerRequest(duration, onCPXResponseListener)
     }
 
 

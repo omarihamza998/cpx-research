@@ -25,4 +25,6 @@ interface ICPXResearch {
 
     fun getCPXResponse(onCPXResponseListener: OnCPXResponseListener<CPXResponse>)
 
+    fun hideBannerForDuration(duration: Long, onCPXResponseListener: OnCPXResponseListener<Any>)
+
 }

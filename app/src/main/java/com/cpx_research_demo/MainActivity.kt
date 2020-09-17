@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val cpxSettings = CPXSettingsBuilder("1", "15879600")
+        val cpxSettings = CPXSettingsBuilder("1", "15879602")
             .setWebViewActivityRequestCode(100)
             .build()
 

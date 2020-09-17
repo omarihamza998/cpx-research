@@ -56,7 +56,7 @@ class CPXSettings(
         builder.webViewActivityRequestCode
     )
 
-    fun convertToRequestParameters(): Map<String, String> {
+    fun convertToRequestParameters(isExpert: Boolean): Map<String, String> {
         val params = HashMap<String, String>()
 
         params["app_id"] = appId
@@ -81,7 +81,8 @@ class CPXSettings(
         webViewBoxBackgroundColor?.let { params["box_background_color"] = it }
         webViewStarsFilledColor?.let { params["stars_filled"] = it }
         params["output_method"] = "jsscriptv1"
-
+        if (isExpert) params["theme_style"] = "6"
+        else params["theme_style"] = "4"
         return params
     }
 

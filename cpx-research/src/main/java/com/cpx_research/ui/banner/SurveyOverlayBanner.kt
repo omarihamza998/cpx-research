@@ -1,8 +1,10 @@
 package com.cpx_research.ui.banner
 
 import android.app.Activity
-import android.content.Intent
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Handler
 import android.os.Looper
 import android.view.Gravity
@@ -10,9 +12,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageButton
+import android.widget.ListView
 import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.widget.PopupMenu
 import androidx.core.text.HtmlCompat
 import com.cpx_research.CPXResearch
 import com.cpx_research.R
@@ -21,6 +22,9 @@ import com.cpx_research.models.CPXResponse
 import com.cpx_research.models.CPXSettings
 import com.cpx_research.models.CPXTextInformation
 import com.cpx_research.ui.webview.CPXWebViewActivity
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 
 interface ISurveyOverlayBanner {
@@ -49,7 +53,6 @@ interface ISurveyOverlayClickListeners {
 
 class SurveyOverlayBanner(
     private val activity: Activity,
-    private val cpxResearch: CPXResearch,
     private val cpxSettings: CPXSettings,
     private val checkInterval: Long
 ) : ISurveyOverlayBanner, ISurveyOverlayClickListeners {
@@ -60,6 +63,8 @@ class SurveyOverlayBanner(
     // Periodic Checks Timer
     private var handler: Handler? = null
 
+    private val cpxNetworking = BannerNetworkingImpl(cpxSettings)
+
     private val updateSurveysBannerTask = object : Runnable {
         override fun run() {
             checkForNewSurveys()
@@ -68,7 +73,7 @@ class SurveyOverlayBanner(
     }
 
     fun checkForNewSurveys() {
-        cpxResearch.getCPXResponse(object : OnCPXResponseListener<CPXResponse> {
+        cpxNetworking.getCPXResponse(object : OnCPXResponseListener<CPXResponse> {
             override fun onSuccess(data: CPXResponse?) {
                 // Available Surveys > 0 ? -> Show the Surveys
                 if (!data?.CPXSurveys.isNullOrEmpty()) {
@@ -87,7 +92,7 @@ class SurveyOverlayBanner(
 
     override fun enableBanner() {
         // Get Available Surveys Count
-        cpxResearch.getCPXResponse(object : OnCPXResponseListener<CPXResponse> {
+        cpxNetworking.getCPXResponse(object : OnCPXResponseListener<CPXResponse> {
             override fun onSuccess(data: CPXResponse?) {
                 // Available Surveys > 0 ? -> Show the Surveys
                 if (!data?.CPXSurveys.isNullOrEmpty()) {
@@ -169,9 +174,47 @@ class SurveyOverlayBanner(
     }
 
     override fun onCloseBannerClickListener(cpxTextInformation: CPXTextInformation) {
-        val popup = PopupMenu(activity, banner!!.findViewById(R.id.closeBannerButton)!!)
+        val builder = AlertDialog.Builder(activity)
+        val hashMap = HashMap<String, Long>()
+        cpxTextInformation.reload1Text?.let {
+            hashMap[cpxTextInformation.reload1Text!!] = cpxTextInformation.reload1Time
+        }
+        cpxTextInformation.reload2Text?.let {
+            hashMap[cpxTextInformation.reload2Text!!] = cpxTextInformation.reload2Time
 
-        popup.show() //showing popup menu
+        }
+        cpxTextInformation.reload3Text?.let {
+            hashMap[cpxTextInformation.reload3Text!!] = cpxTextInformation.reload3Time
+        }
+
+        val keys = hashMap.keys.toTypedArray()
+
+
+        builder.setItems(
+            keys
+        ) { dialog, which ->
+            cpxNetworking.hideBannerRequest(
+                hashMap[keys[which]]!!,
+                object : OnCPXResponseListener<Any> {
+                    override fun onSuccess(data: Any?) {
+                        disableBanner(true)
+                    }
+
+                    override fun onError(message: String) {
+                    }
+
+                })
+        }
+
+        builder.setNegativeButton(
+            "Close"
+        ) { dialog, which -> }
+
+
+        val dialog = builder.show()
+        val listView: ListView = dialog.listView
+        listView.divider = ColorDrawable(Color.GRAY)
+        listView.dividerHeight = 1
     }
 
 }

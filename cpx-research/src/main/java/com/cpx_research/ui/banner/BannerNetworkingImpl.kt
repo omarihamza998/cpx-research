@@ -1,4 +1,4 @@
-package com.cpx_research.networking
+package com.cpx_research.ui.banner
 
 import android.util.Log
 import com.androidnetworking.AndroidNetworking
@@ -11,13 +11,13 @@ import com.cpx_research.models.CPXSettings
 import com.cpx_research.models.CPXSurvey
 import com.cpx_research.models.CPXTextInformation
 
-class CPXNetworkingImpl(private val cpxSettings: CPXSettings) : CPXNetworking {
+class BannerNetworkingImpl(private val cpxSettings: CPXSettings) : CPXNetworking {
 
     companion object {
         private const val GET_SURVEYS_URL = "https://live-api.cpx-research.com/api/get-surveys.php"
     }
 
-    val isExpert = true
+    private val isExpert = false
 
     override fun getCPXResponse(onCPXResponseListener: OnCPXResponseListener<CPXResponse>) {
         AndroidNetworking.get(GET_SURVEYS_URL)

@@ -16,5 +16,18 @@ data class CPXTextInformation(
     @SerializedName("headline_1_element_2")
     var headline1Element2: String,
     @SerializedName("headline_2_element_1")
-    var headline2Element1: String
+    var headline2Element1: String,
+    @SerializedName("reload_1_short_text")
+    var reload1Text: String? = null,
+    @SerializedName("reload_1_short_time")
+    var reload1Time: Long = 0,
+    @SerializedName("reload_2_short_text")
+    var reload2Text: String? = null,
+    @SerializedName("reload_2_short_time")
+    var reload2Time: Long = 0,
+    @SerializedName("reload_3_short_text")
+    var reload3Text: String? = null,
+    @SerializedName("reload_3_short_time")
+    var reload3Time: Long = 0
+
 )

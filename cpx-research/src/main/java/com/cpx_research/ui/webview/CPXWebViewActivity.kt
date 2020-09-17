@@ -61,7 +61,7 @@ class CPXWebViewActivity : AppCompatActivity() {
         val builder = Uri.parse(webViewUrl)
             .buildUpon()
 
-        cpxSettings.convertToRequestParameters().forEach {
+        cpxSettings.convertToRequestParameters(true).forEach {
             builder.appendQueryParameter(it.key, it.value)
         }
 
