@@ -9,8 +9,11 @@ import com.cpx_research.interfaces.OnCPXResponseListener
 import com.cpx_research.models.CPXSettingsBuilder
 import com.cpx_research.models.CPXSurvey
 import com.cpx_research.models.CPXTextInformation
+import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
+
+    lateinit var cpxResearch: CPXResearch
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,8 +22,17 @@ class MainActivity : AppCompatActivity() {
         val cpxSettings = CPXSettingsBuilder("1", "15879600")
             .build()
 
-        val cpxResearch = CPXResearch.init(this, cpxSettings)
+        cpxResearch = CPXResearch.init(this, cpxSettings)
 
-        cpxResearch.enableBanner()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        cpxResearch.enableBanner(TimeUnit.SECONDS.toMillis(20))
+    }
+
+    override fun onPause() {
+        super.onPause()
+        cpxResearch.disableBanner()
     }
 }

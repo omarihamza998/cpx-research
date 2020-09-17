@@ -3,6 +3,8 @@ package com.cpx_research.ui.banner
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
+import android.os.Handler
+import android.os.Looper
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
@@ -25,7 +27,7 @@ interface ISurveyOverlayBanner {
 
     fun enableBanner()
 
-    fun disableBanner()
+    fun disableBanner(stopTimer: Boolean = true)
 
     fun inflateView(cpxTextInformation: CPXTextInformation)
 
@@ -55,6 +57,30 @@ class SurveyOverlayBanner(
     private var banner: View? = null
     var isBannerVisible = false
 
+    // Periodic Checks Timer
+    private var handler: Handler? = null
+
+    private val updateSurveysBannerTask = object : Runnable {
+        override fun run() {
+            cpxResearch.getCPXResponse(object : OnCPXResponseListener<CPXResponse> {
+                override fun onSuccess(data: CPXResponse?) {
+                    // Available Surveys > 0 ? -> Show the Surveys
+                    if (!data?.CPXSurveys.isNullOrEmpty()) {
+                        showView()
+                    } else {
+                        // Available Surveys == 0
+                        disableBanner(false)
+                    }
+                }
+
+                override fun onError(message: String) {
+                    // Error -> do nothing
+                }
+            })
+            handler?.postDelayed(this, checkInterval)
+        }
+    }
+
     override fun enableBanner() {
         // Get Available Surveys Count
         cpxResearch.getCPXResponse(object : OnCPXResponseListener<CPXResponse> {
@@ -66,8 +92,10 @@ class SurveyOverlayBanner(
                     }
                     showView()
                     createTimer()
+                } else {
+                    // Available Surveys == 0
+                    disableBanner(false)
                 }
-                // Available Surveys == 0 ? -> do nothing
             }
 
             override fun onError(message: String) {
@@ -77,9 +105,9 @@ class SurveyOverlayBanner(
         })
     }
 
-    override fun disableBanner() {
+    override fun disableBanner(stopTimer: Boolean) {
         isBannerVisible = false
-        stopTimer()
+        if (stopTimer) stopTimer()
         val rootView = activity.findViewById<ViewGroup>(android.R.id.content)
         rootView.removeView(banner)
     }
@@ -109,22 +137,27 @@ class SurveyOverlayBanner(
     }
 
     override fun showView() {
-        val rootView = activity.findViewById<ViewGroup>(android.R.id.content)
-        val params = FrameLayout.LayoutParams(
-            FrameLayout.LayoutParams.WRAP_CONTENT,
-            FrameLayout.LayoutParams.WRAP_CONTENT
-        )
-        params.gravity = Gravity.BOTTOM or Gravity.CENTER
-        rootView.addView(banner, params)
+        if (banner?.parent == null) {
+            val rootView = activity.findViewById<ViewGroup>(android.R.id.content)
+            val params = FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.WRAP_CONTENT,
+                FrameLayout.LayoutParams.WRAP_CONTENT
+            )
+            params.gravity = Gravity.BOTTOM or Gravity.CENTER
+            rootView.addView(banner, params)
+        }
         isBannerVisible = true
     }
 
     override fun createTimer() {
-
+        if (handler == null) {
+            handler = Handler(Looper.getMainLooper())
+        }
+        handler?.post(updateSurveysBannerTask)
     }
 
     override fun stopTimer() {
-
+        handler?.removeCallbacks(updateSurveysBannerTask)
     }
 
     override fun onOpenWebViewClickListener() {

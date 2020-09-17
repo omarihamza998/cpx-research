@@ -41,6 +41,7 @@ class CPXResearch private constructor(
     }
 
     override fun disableBanner() {
+        surveyOverlayBanner?.disableBanner(true)
     }
 
     override fun fetchAvailableSurveys(onCPXResponseListener: OnCPXResponseListener<List<CPXSurvey>>) {
