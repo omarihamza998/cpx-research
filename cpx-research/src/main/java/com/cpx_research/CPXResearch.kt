@@ -61,6 +61,7 @@ class CPXResearch private constructor(
 
 
     override fun checkForNewSurveys() {
+        surveyOverlayBanner?.checkForNewSurveys()
     }
 
     override fun openSurveyWall() {

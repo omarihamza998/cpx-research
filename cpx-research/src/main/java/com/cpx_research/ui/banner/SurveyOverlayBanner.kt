@@ -62,23 +62,27 @@ class SurveyOverlayBanner(
 
     private val updateSurveysBannerTask = object : Runnable {
         override fun run() {
-            cpxResearch.getCPXResponse(object : OnCPXResponseListener<CPXResponse> {
-                override fun onSuccess(data: CPXResponse?) {
-                    // Available Surveys > 0 ? -> Show the Surveys
-                    if (!data?.CPXSurveys.isNullOrEmpty()) {
-                        showView()
-                    } else {
-                        // Available Surveys == 0
-                        disableBanner(false)
-                    }
-                }
-
-                override fun onError(message: String) {
-                    // Error -> do nothing
-                }
-            })
+            checkForNewSurveys()
             handler?.postDelayed(this, checkInterval)
         }
+    }
+
+    fun checkForNewSurveys() {
+        cpxResearch.getCPXResponse(object : OnCPXResponseListener<CPXResponse> {
+            override fun onSuccess(data: CPXResponse?) {
+                // Available Surveys > 0 ? -> Show the Surveys
+                if (!data?.CPXSurveys.isNullOrEmpty()) {
+                    showView()
+                } else {
+                    // Available Surveys == 0
+                    disableBanner(false)
+                }
+            }
+
+            override fun onError(message: String) {
+                // Error -> do nothing
+            }
+        })
     }
 
     override fun enableBanner() {
@@ -169,18 +173,7 @@ class SurveyOverlayBanner(
     override fun onCloseBannerClickListener(cpxTextInformation: CPXTextInformation) {
         val popup = PopupMenu(activity, banner!!.findViewById(R.id.closeBannerButton)!!)
 
-
-        popup.setOnMenuItemClickListener {
-            Toast.makeText(
-                activity,
-                "You Clicked : " + it.title,
-                Toast.LENGTH_SHORT
-            ).show()
-            return@setOnMenuItemClickListener true
-        }
-
         popup.show() //showing popup menu
-
     }
 
 }
