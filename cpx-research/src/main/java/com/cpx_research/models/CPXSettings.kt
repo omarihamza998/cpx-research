@@ -24,8 +24,9 @@ class CPXSettings(
     var webViewTopBarBackgroundColor: String?,
     var webViewBoxBackgroundColor: String?,
     var webViewStarsFilledColor: String?,
-    var overlayBannerBackgroundColor: String= "#1565c0",
-    var overlayBannerTextColor: String = "#ffffff"
+    var overlayBannerBackgroundColor: String = "#1565c0",
+    var overlayBannerTextColor: String = "#ffffff",
+    var webViewActivityRequestCode: Int? = null
 ) : Serializable {
 
     constructor(builder: CPXSettingsBuilder) : this(
@@ -51,7 +52,8 @@ class CPXSettings(
         builder.webViewBoxBackgroundColor,
         builder.webViewStarsFilledColor,
         builder.overlayBannerBackgroundColor ?: "#1565c0",
-        builder.overlayBannerTextColor ?: "#ffffff"
+        builder.overlayBannerTextColor ?: "#ffffff",
+        builder.webViewActivityRequestCode
     )
 
     fun convertToRequestParameters(): Map<String, String> {
@@ -108,6 +110,8 @@ class CPXSettingsBuilder(val appId: String, val extUserId: String) {
     var webViewStarsFilledColor: String? = null
     var overlayBannerBackgroundColor: String? = null
     var overlayBannerTextColor: String? = null
+    var webViewActivityRequestCode: Int? = null
+
 
     fun setEmail(email: String) = apply { this.email = email }
 
@@ -156,6 +160,8 @@ class CPXSettingsBuilder(val appId: String, val extUserId: String) {
     fun setOverlayBannerTextColor(textColor: String) =
         apply { this.overlayBannerTextColor = textColor }
 
+    fun setWebViewActivityRequestCode(requestCode: Int) =
+        apply { this.webViewActivityRequestCode = requestCode }
 
     fun build() = CPXSettings(this)
 

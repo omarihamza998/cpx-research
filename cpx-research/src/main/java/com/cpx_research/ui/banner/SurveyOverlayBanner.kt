@@ -165,9 +165,7 @@ class SurveyOverlayBanner(
     }
 
     override fun onOpenWebViewClickListener() {
-        val intent = Intent(activity, CPXWebViewActivity::class.java)
-        intent.putExtra("settings", cpxSettings)
-        activity.startActivity(intent)
+        CPXWebViewActivity.launchActivity(activity, cpxSettings)
     }
 
     override fun onCloseBannerClickListener(cpxTextInformation: CPXTextInformation) {
