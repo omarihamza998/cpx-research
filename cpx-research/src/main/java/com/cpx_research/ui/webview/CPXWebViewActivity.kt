@@ -38,6 +38,10 @@ class CPXWebViewActivity : AppCompatActivity() {
             builder.appendQueryParameter(it.key, it.value)
         }
 
+        intent.getStringExtra("survey_id")?.let {
+            builder.appendQueryParameter("survey_id", it)
+        }
+
         webViewUrl = builder.build().toString()
 
     }

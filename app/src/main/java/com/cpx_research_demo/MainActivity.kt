@@ -9,6 +9,7 @@ import com.cpx_research.interfaces.OnCPXResponseListener
 import com.cpx_research.models.CPXSettingsBuilder
 import com.cpx_research.models.CPXSurvey
 import com.cpx_research.models.CPXTextInformation
+import kotlinx.android.synthetic.main.activity_main.*
 import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
@@ -24,15 +25,29 @@ class MainActivity : AppCompatActivity() {
 
         cpxResearch = CPXResearch.init(this, cpxSettings)
 
+        launchSurveyButton.setOnClickListener {
+            cpxResearch.openSurvey(surveyIdEditText.text.toString())
+        }
+
+        openSurveysWallButton.setOnClickListener {
+            cpxResearch.openSurveyWall()
+        }
+
+        startTimerButton.setOnClickListener {
+            cpxResearch.enableBanner(TimeUnit.SECONDS.toMillis(20))
+        }
+
+        stopTimerButton.setOnClickListener {
+            cpxResearch.disableBanner()
+        }
+
     }
 
     override fun onResume() {
         super.onResume()
-        cpxResearch.enableBanner(TimeUnit.SECONDS.toMillis(20))
     }
 
     override fun onPause() {
         super.onPause()
-        cpxResearch.disableBanner()
     }
 }

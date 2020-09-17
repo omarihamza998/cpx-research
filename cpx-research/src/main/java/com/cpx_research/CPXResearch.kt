@@ -1,6 +1,7 @@
 package com.cpx_research
 
 import android.app.Activity
+import android.content.Intent
 import com.androidnetworking.AndroidNetworking
 import com.androidnetworking.interceptors.HttpLoggingInterceptor
 import com.cpx_research.ui.banner.SurveyOverlayBanner
@@ -12,6 +13,7 @@ import com.cpx_research.models.CPXSettings
 import com.cpx_research.models.CPXSurvey
 import com.cpx_research.models.CPXTextInformation
 import com.cpx_research.networking.CPXNetworkingImpl
+import com.cpx_research.ui.webview.CPXWebViewActivity
 
 
 class CPXResearch private constructor(
@@ -65,9 +67,16 @@ class CPXResearch private constructor(
     }
 
     override fun openSurveyWall() {
+        val intent = Intent(activity, CPXWebViewActivity::class.java)
+        intent.putExtra("settings", cpxSettings)
+        activity.startActivity(intent)
     }
 
     override fun openSurvey(surveyId: String) {
+        val intent = Intent(activity, CPXWebViewActivity::class.java)
+        intent.putExtra("settings", cpxSettings)
+        intent.putExtra("survey_id", surveyId)
+        activity.startActivity(intent)
     }
 
 
