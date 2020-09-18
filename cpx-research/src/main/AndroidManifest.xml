@@ -4,8 +4,7 @@
 
     <application>
         <activity
-            android:name=".ui.webview.CPXWebViewActivity"
-            android:theme="@style/CPXWebViewStyle"/>
+            android:name=".ui.webview.CPXWebViewActivity"/>
     </application>
 
 </manifest>
