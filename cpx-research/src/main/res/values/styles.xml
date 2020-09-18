@@ -1,7 +1,7 @@
 <resources>
 
 
-    <style name="CPXWebViewStyle" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="CPXWebViewStyle" parent="Theme.AppCompat.NoActionBar">
 
     </style>
 
