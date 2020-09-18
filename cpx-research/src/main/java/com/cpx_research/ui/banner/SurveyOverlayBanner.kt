@@ -192,7 +192,7 @@ class SurveyOverlayBanner(
 
         builder.setItems(
             keys
-        ) { dialog, which ->
+        ) { _, which ->
             cpxNetworking.hideBannerRequest(
                 hashMap[keys[which]]!!,
                 object : OnCPXResponseListener<Any> {
@@ -208,7 +208,7 @@ class SurveyOverlayBanner(
 
         builder.setNegativeButton(
             "Close"
-        ) { dialog, which -> }
+        ) { _, _ -> }
 
 
         val dialog = builder.show()
