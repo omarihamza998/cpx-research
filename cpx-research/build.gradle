@@ -1,17 +1,8 @@
-apply plugin: 'com.novoda.bintray-release'
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-
-publish {
-    artifactId = 'cpx-research'
-    publishVersion = '1.0.0'
-    userOrg = 'tessafold'
-    groupId = 'com.cpxresearch'
-    repoName = 'cpx-research'
-    desc = 'Integrate your app with our Surveys!'
-    website = 'https://www.cpx-research.com/main/en/'
-}
+apply plugin: 'com.github.dcendents.android-maven'
+group = 'com.github.omarihamza998'
 
 android {
     compileSdkVersion 29
