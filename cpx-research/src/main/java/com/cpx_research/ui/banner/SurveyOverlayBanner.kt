@@ -52,9 +52,9 @@ interface ISurveyOverlayClickListeners {
 }
 
 class SurveyOverlayBanner(
-    private val activity: Activity,
-    private val cpxSettings: CPXSettings,
-    private val checkInterval: Long
+        private val activity: Activity,
+        private val cpxSettings: CPXSettings,
+        private val checkInterval: Long
 ) : ISurveyOverlayBanner, ISurveyOverlayClickListeners {
 
     private var banner: View? = null
@@ -129,8 +129,8 @@ class SurveyOverlayBanner(
             //Get Reference of the title TextView
             val textView = banner?.findViewById<TextView>(R.id.bannerTitleTextView)
             textView?.text = HtmlCompat.fromHtml(
-                cpxTextInformation.headlineGeneral,
-                HtmlCompat.FROM_HTML_MODE_LEGACY
+                    cpxTextInformation.headlineGeneral,
+                    HtmlCompat.FROM_HTML_MODE_LEGACY
             )
             textView?.setBackgroundColor(Color.parseColor(cpxSettings.overlayBannerBackgroundColor))
             textView?.setTextColor(Color.parseColor(cpxSettings.overlayBannerTextColor))
@@ -149,8 +149,8 @@ class SurveyOverlayBanner(
         if (banner?.parent == null) {
             val rootView = activity.findViewById<ViewGroup>(android.R.id.content)
             val params = FrameLayout.LayoutParams(
-                FrameLayout.LayoutParams.WRAP_CONTENT,
-                FrameLayout.LayoutParams.WRAP_CONTENT
+                    FrameLayout.LayoutParams.WRAP_CONTENT,
+                    FrameLayout.LayoutParams.WRAP_CONTENT
             )
             params.gravity = Gravity.BOTTOM or Gravity.CENTER
             rootView.addView(banner, params)
@@ -174,7 +174,7 @@ class SurveyOverlayBanner(
     }
 
     override fun onCloseBannerClickListener(cpxTextInformation: CPXTextInformation) {
-        val builder = AlertDialog.Builder(activity)
+        val builder = AlertDialog.Builder(activity, R.style.AlertDialogStyle);
         val hashMap = HashMap<String, Long>()
         cpxTextInformation.reload1Text?.let {
             hashMap[cpxTextInformation.reload1Text!!] = cpxTextInformation.reload1Time
@@ -191,23 +191,23 @@ class SurveyOverlayBanner(
 
 
         builder.setItems(
-            keys
+                keys
         ) { _, which ->
             cpxNetworking.hideBannerRequest(
-                hashMap[keys[which]]!!,
-                object : OnCPXResponseListener<Any> {
-                    override fun onSuccess(data: Any?) {
-                        disableBanner(true)
-                    }
+                    hashMap[keys[which]]!!,
+                    object : OnCPXResponseListener<Any> {
+                        override fun onSuccess(data: Any?) {
+                            disableBanner(true)
+                        }
 
-                    override fun onError(message: String) {
-                    }
+                        override fun onError(message: String) {
+                        }
 
-                })
+                    })
         }
 
         builder.setNegativeButton(
-            "Close"
+                "Close"
         ) { _, _ -> }
 
 
