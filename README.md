@@ -4,6 +4,12 @@
 
 [Learn more.](https://cpx-research.com/)
 
+# Table of Contents
+
+* Prerequisites
+* Complete Guide
+* Overlay Banner
+* Expert Mode
 
 # Prerequisites
 
@@ -171,7 +177,33 @@ Table .1 Optional Customization Options
     }
  ```
   
- ## Easy Integration
+ ## Overlay Banner
  
+ ### Step 1
+ To display the banner at the bottom of your activity, you need to the following line in your activity's onResume:
+ 
+ ```kotlin
+   override fun onResume() {
+        super.onResume()
+        
+        /* ... */
+        
+        cpxResearch.enableBanner(TimeUnit.MINUTES.toMillis(2))
+    }
+ ```
+ 
+ The SDK regularly checks to see if there are any available surveys, you can specify the check period by passing the desired value to the enableBanner(duration) method.
+ 
+ In the previous example, the SDK will check for available surveys every 2 minutes.
+ 
+ ### Step 2
+ Add this line of code to you activity's onPause:
+ 
+```kotlin
+    override fun onPause() {
+        super.onPause()
+        cpxResearch.disableBanner()
+    }
+```
  
  ## Expert Mode
