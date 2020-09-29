@@ -48,6 +48,8 @@ Add it in your root build.gradle at the end of repositories:
 
 ### Step 1. Create CPX Settings using CPXSettingsBuilder
 
+You must provide the app id and the user id using this builder. 
+
 * Kotlin
 
 ```kotlin
@@ -62,11 +64,9 @@ Add it in your root build.gradle at the end of repositories:
 	CPXSettings cpxSettings = new CPXSettingsBuilder("YOUR_APP_ID", "YOUR_USER_ID").build();
 ```
 
-You must provide the app id and the user id using this builder. 
+And you will also be able to provide other customization parameters using different methods (see the table below for all customization options).
 
-And you will also be able to provide other customization parameters using different methods (see the table [1. Customization Options Table] below for all customization options).
-
-Table .1 Customization Options
+Table .1 Optional Customization Options
 
  \# | Method | Description | Default Value
  ---|--------|------------ | -------------
@@ -84,9 +84,9 @@ Table .1 Customization Options
   12 | setWebViewStarsFilledColor("#STARS_FILLED_COLOR") | Rating stars fill color| Retrieved from CPX Research
   13 | setWebViewActivityRequestCode(Int) | If you want to get a listener that the WebView Activity is closed, provide the request id using this method, and override onActivityResult method in your activity. | empty
   
- Complete Customization Example:
+ #### Complete Customization Example:
  
- Kotlin:
+ * Kotlin:
  
  ```kotlin
  val cpxSettings = CPXSettingsBuilder("APP_ID", "USER_ID")
@@ -106,7 +106,7 @@ Table .1 Customization Options
             .build()
  ```
  
- Java:
+ * Java:
  
  ```java
  
@@ -137,5 +137,41 @@ Table .1 Customization Options
         }
     }
  ```
+ 
+ ### Step 2. Initiate the SDK
+ 
+ Inside your activity's onResume add the following line of code:
+ 
+ * Kotlin: 
+ 
+ ```kotlin
+   override fun onResume() {
+        super.onResume()
+
+        val cpxSettings = CPXSettingsBuilder("APP_ID", "USER_ID")
+            /* CUSTOMIZATION */
+            .build()
+
+        cpxResearch = CPXResearch.init(this, cpxSettings)
+    }
+ ```
+ 
+ * Java:
+ 
+ ```java
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        CPXSettings cpxSettings = new CPXSettingsBuilder("APP_ID", "USER_ID")
+                /* CUSTOMIZATION */
+                .build();
+
+        cpxResearch = CPXResearch.Companion.init(this, cpxSettings);
+    }
+ ```
   
-  
+ ## Easy Integration
+ 
+ 
+ ## Expert Mode
