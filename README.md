@@ -318,7 +318,7 @@ Table .1 Optional Customization Options
  You can manually tell the SDK to check if there are new surveys using this method:
  
  ```kotlin
-    cpxResearch.checkForNewSurveys(
+    cpxResearch.checkForNewSurveys()
  ```
  
  ### Open Surveys Wall WebView
