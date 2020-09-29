@@ -6,7 +6,7 @@
 
 # Table of Contents
 
-* [Prerequisites](#prerequisites}
+* [Prerequisites](#prerequisites)
 * [Complete Guide](#complete-guide)
 * [Overlay Banner](#overlay-banner)
 * [Expert Mode](#expert-mode)
