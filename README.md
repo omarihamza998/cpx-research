@@ -6,10 +6,10 @@
 
 # Table of Contents
 
-* Prerequisites
-* Complete Guide
-* Overlay Banner
-* Expert Mode
+* [Prerequisites](#prerequisites}
+* [Complete Guide](#complete-guide)
+* [Overlay Banner](#overlay-banner)
+* [Expert Mode](#expert-mode)
 
 # Prerequisites
 
