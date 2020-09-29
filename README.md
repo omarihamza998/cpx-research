@@ -196,6 +196,8 @@ Table .1 Optional Customization Options
  
  In the previous example, the SDK will check for available surveys every 2 minutes.
  
+ Important: if there are no available surveys, the banner will not get displayed.
+ 
  ### Step 2
  Add this line of code to you activity's onPause:
  
@@ -207,3 +209,164 @@ Table .1 Optional Customization Options
 ```
  
  ## Expert Mode
+ 
+ ### Get Available Surveys
+ 
+ You can fetch all the available surveys using this method:
+ 
+ * Kotlin
+ ```kotlin
+ 	cpxResearch.getAvailableSurveys(object : OnCPXResponseListener<List<CPXSurvey>> {
+            override fun onSuccess(data: List<CPXSurvey>?) {
+                if (data?.isEmpty() == true) {
+                    Toast.makeText(
+                        this@MainActivity,
+                        "There're no available surveys",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    return
+                }
+
+                /* Do something with the data (e.g. pass the surveys to your Surveys RecyclerView Adapter) */
+            }
+
+            override fun onError(message: String) {
+              
+            }
+
+        })
+ ```
+ 
+ * Java
+ ```java
+      cpxResearch.getAvailableSurveys(new OnCPXResponseListener<List<CPXSurvey>>() {
+         @Override
+         public void onSuccess(@org.jetbrains.annotations.Nullable List<CPXSurvey> data) {
+                
+         }
+
+         @Override
+         public void onError(@NotNull String message) {
+
+         }
+      });
+ ```
+ 
+ ### Get Text Information
+ 
+ The CPXTextInformation class has the following fields:
+ 
+ Field Name | Example 
+ ---------- | -----------
+ currencyNameSingular | Coin
+ currencyNamePlural | Coins
+ shortcutMin | Min
+ headlineGeneral | New Surveys available for you! <br> Click here to see! (Banner Text)
+ headline1Element1 | New survey available
+ headline1Element2 | Earn now [payout_rate] [currency_name] in [min_time] Minutes!
+ headline2Element1 | Earn now [payout_rate] [currency_name] in [min_time] Minutes!
+ reload1Text | Do not show this messe for next 3 hours
+ reload1Time | 10800
+ reload2Text | Do not show this messe for next 4 weeks
+ reload2Time | 2419200
+ reload3Text | Do not show this messe for next 3 months
+ reload3Time | 7776000
+ 
+ To fetch these values, call the following method on your CPX Research instance:
+ 
+ * Kotlin
+ 
+ ```kotlin
+ 	cpxResearch.getCPXTextInformation(object : OnCPXResponseListener<CPXTextInformation>{
+            override fun onSuccess(data: CPXTextInformation?) {
+
+            }
+
+            override fun onError(message: String) {
+
+            }
+
+        })
+ ```
+ 
+ * Java
+ 
+ ```java
+ 	cpxResearch.getCPXTextInformation(new OnCPXResponseListener<CPXTextInformation>() {
+            @Override
+            public void onSuccess(@org.jetbrains.annotations.Nullable CPXTextInformation data) {
+        
+            }
+
+            @Override
+            public void onError(@NotNull String message) {
+
+            }
+        });
+ ```
+ 
+ ### Check if the banner is visible
+ 
+ 
+ ```kotlin
+    cpxResearch.isBannerVisible()
+ ```
+
+ 
+ ### Check for New Surveys
+ 
+ You can manually tell the SDK to check if there are new surveys using this method:
+ 
+ ```kotlin
+    cpxResearch.checkForNewSurveys(
+ ```
+ 
+ ### Open Surveys Wall WebView
+ 
+ To open the Surveys Wall (The WebView that displayed all the surveys), call the following method:
+ 
+ ```kotlin
+    cpxResearch.openSurveyWall()
+ ```
+ 
+ ### Open the WebView for a Survey
+ 
+ To start a survey use this method:
+ 
+ ```kotlin
+    cpxResearch.openSurvey("SURVEY_ID")
+ ```
+ 
+ The survey id is fetched using getAvailableSurveys method.
+ 
+ ### Add Transaction Listener
+ 
+ [add description]
+ 
+ * Kotlin
+ 
+ ``` kotlin
+ 	cpxResearch.addOnTransactionListener { cpxTransaction ->
+                Toast.makeText(this, "New Transaction", Toast.LENGTH_LONG).show()
+                Log.e("CPX_TRANSACTION", cpxTransaction.toString())
+            }
+```
+* Java 8-
+
+```java
+	cpxResearch.addOnTransactionListener(new Function1<CPXTransaction, Unit>() {
+            @Override
+            public Unit invoke(CPXTransaction cpxTransaction) {
+                return null;
+            }
+        });
+```
+* Java 8
+
+```java
+       cpxResearch.addOnTransactionListener(cpxTransaction -> {
+            /* DO SOMETHING */
+            return null;
+        });
+```
+ 
